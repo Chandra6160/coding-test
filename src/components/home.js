@@ -55,8 +55,8 @@ export default class Home extends React.Component {
                                             <td scope="col">{e.first_name}</td>
                                             <td scope="col">{e.last_name}</td>
                                             <td scope="col"><img src={e.avatar} ></img></td>
-                                            <td scope="col"><Link to={`/edit/${e.name}`} className="p-2">link</Link></td>
-                                            <td scope="col"><Link to={`/delete/${e.name}`} className="p-2">link</Link></td>
+                                            <td scope="col"><Link to={`/nav/edit/${e.id}`} className="p-2">link</Link></td>
+                                            <td scope="col"><Link to={`/nav/delete/${e.id}`} className="p-2">link</Link></td>
                                         </tr>
                                     )
                                 })}

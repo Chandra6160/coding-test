@@ -5,6 +5,8 @@ import Home from "./home.js";
 import HomeSecond from "./home2";
 import Create from "./create";
 import Show from "./show";
+import Delete from "./Delete"
+import Edit from "./Edit";
 import axios from "axios";
 export default class Nav extends React.Component {
     constructor(props) {
@@ -44,6 +46,9 @@ export default class Nav extends React.Component {
                         <li class="nav-item active">
                             <Link to="/nav/create" class="nav-link" href="#">Create <span class="sr-only">(current)</span></Link>
                         </li>
+                        <li class="nav-item active">
+                            <Link to="/" class="nav-link" href="#">Logout <span class="sr-only">(current)</span></Link>
+                        </li>
                     </ul>
                     
                 </div>
@@ -52,7 +57,8 @@ export default class Nav extends React.Component {
             <Route path="/nav/home" component={Home} />
             <Route path="/nav/homesecond" component={HomeSecond} />
             <Route path="/nav/show/:id" render={(props) => { return (<Show  array={this.state.arr} {...props} />) }} />
-
+            <Route path="/nav/delete/:id" render={(props) => { return (<Delete  array={this.state.arr} {...props} />) }} />
+            <Route path="/nav/edit/:id" render={(props) => { return (<Edit  array={this.state.arr} {...props} />) }} />
             </React.Fragment>
         )
     }
