@@ -49,7 +49,7 @@ export default class HomeSecond extends React.Component {
                                     return (
                                         <tr >
                                             <td>
-                                                <Link to={`/show/${e.id}`}>{e.id}</Link>
+                                                <Link to={`/nav/show/${e.id}`}>{e.id}</Link>
                                             </td>
                                             <td scope="col">{e.email}</td>
                                             <td scope="col">{e.first_name}</td>
