@@ -1,35 +1,60 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GoogleLogin from 'react-google-login';
-import Nav from "./nav"
+// import GoogleLogin from 'react-google-login';
+import Nav from "./nav";
+import Login from "./login";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import axios from "axios";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.setState = {
-
+        this.state = {
+            access_token:"",
+            email: "",
+            password: "",
         }
     }
-    render() {
-        const responseGoogle = (response) => {
-            console.log(response);
-            return (
-                <Nav result={response} />
-            )
+    handleInputEmail = (e) => {
+        this.setState({
+            email: e.target.value,
+        })
+    }
+    handleInputPassword = (e) => {
+        this.setState({
+            password: e.target.value,
+        })
+    }
+    onSubmit = () => {
+        var fields= {
+            email:this.state.email,
+            password :this.state.password
         }
+        axios({
+			method: 'POST',
+    		url: 'https://reqres.in/api/login',
+    		data : fields
+		})
+		.then((response) =>{
+			this.setState({
+				access_token :response.data.token
+			});	
+		})
+		.catch((err) => alert(err))
+
+    }
+
+    render() {
+        console.log(this.state.email)
+        console.log(this.state.password)
+        console.log(this.state.access_token)
         return (
             <Router>
-                <div className="bg-dark py-5 row justify-content-center">
-                    <Link to="/nav"><GoogleLogin
-                        clientId="473674434100-1gp5a2v0aiugsihkvjmc2fqnav454fq5.apps.googleusercontent.com"
-                        buttonText="Login"
-                        onSuccess={responseGoogle}
-                        onFailure={responseGoogle}
-                        cookiePolicy={'single_host_origin'}
-                    /></Link>
-                </div>
-
+                <Route path="/" exact render={(props) => { return (<Login handleInputEmail={this.handleInputEmail}
+                handleInputPassword={this.handleInputPassword}
+                onSubmit={this.onSubmit}
+                />) }} />
+                <Route path="/nav" render={(props) => {return (<Nav token={this.state.access_token} />)}} />
             </Router>
 
         );
