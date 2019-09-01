@@ -4,12 +4,27 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Home from "./home.js";
 import HomeSecond from "./home2";
 import Create from "./create";
+import Show from "./show";
+import axios from "axios";
 export default class Nav extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             token:this.props.token,
+            arr : []
         }
+    }
+    componentDidMount() {
+        axios({
+            method: 'get',
+            url: 'https://reqres.in/api/users?page=1',
+        })
+            .then((response) => {
+                this.setState({
+                    arr: response.data.data,
+                });
+            })
+            .catch((err) => alert(err))
     }
     render() {
 
@@ -36,6 +51,7 @@ export default class Nav extends React.Component {
             <Route path ="/nav/create" component={Create} />
             <Route path="/nav/home" component={Home} />
             <Route path="/nav/homesecond" component={HomeSecond} />
+            <Route path="/nav/show/:id" render={(props) => { return (<Show  array={this.state.arr} {...props} />) }} />
 
             </React.Fragment>
         )
