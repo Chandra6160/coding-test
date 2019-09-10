@@ -12,11 +12,8 @@ export default class Delete extends React.Component {
     componentDidMount() {
         axios({
             method: 'GET',
-            url: 'https://reqres.in/api/users',
-            params: {
-                "id": this.props.match.params.id
-            }
-
+            url: `http://localhost:3002/user/show/${this.props.match.params.id}`,
+            
         })
             .then((response) => {
                 this.setState({

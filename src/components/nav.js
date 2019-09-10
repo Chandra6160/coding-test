@@ -19,11 +19,12 @@ export default class Nav extends React.Component {
     componentDidMount() {
         axios({
             method: 'get',
-            url: 'https://reqres.in/api/users?page=1',
+            url: 'http://localhost:3002/nav/home',
         })
             .then((response) => {
+                console.log(response)
                 this.setState({
-                    arr: response.data.data,
+                    arr: response.data,
                 });
             })
             .catch((err) => alert(err))

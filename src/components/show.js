@@ -6,23 +6,22 @@ export default class Show extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            arr: {},
+            arr: [],
         }
     }
     componentDidMount() {
         axios({
             method: 'get',
-            url: 'https://reqres.in/api/users',
-            params: {
-                "id": this.props.match.params.id
-            }
+            url: `http://localhost:3002/user/show/${this.props.match.params.id}`,
+            // params: {
+            //     "id": this.props.match.params.id
+            // }
 
         })
             .then((response) => {
-                var ob = response.data.data;
-                console.log(ob.avatar)
+                console.log(response)
                 this.setState({
-                    arr: response.data.data,
+                    arr: response.data.user,
                 });
             })
             .catch((err) => alert(err))
@@ -30,36 +29,46 @@ export default class Show extends React.Component {
    
     render() {
         // console.log(ob.id,ob.avatar)
-        console.log(this.state.arr.id)
-        console.log(typeof (this.state.arr.id))
+        console.log(this.state.arr)
+        console.log(typeof (this.state.arr))
         return (
             <React.Fragment>
-                <div class="row justify-content-center">
-                    <div class="col-6">
-                        <form className="text-white bg-dark ">
-                            <div class="form-group">
-                                {/* <input type="text" name="mobile" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter mobile no." />  */}
-                                <img src={this.state.arr.avatar} />
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputCode">ID</label>
-                                <input type="text" class="form-control" id="exampleInputCode" aria-describedby="emailHelp" placeholder="Enter id" name="id" value={this.state.arr.id} />
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">First Name</label>
-                                <input type="text" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter First Name" value={this.state.arr.first_name} />
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Last Name</label>
-                                <input type="text" name="fname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Last Name " value={this.state.arr.last_name} />
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Email</label>
-                                <input type="text" name="lname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Email" value={this.state.arr.email} />
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Mobile</th>
+                                    <th scope="col">DoB</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Adresses</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.arr.map((e,index) => {
+                                    return (
+                                        <tr >
+                                            <td>
+                                                {e._id}
+                                            </td>
+                                            <td scope="col">{e.name}</td>
+                                            <td scope="col">{e.email}</td>
+                                            <td scope="col">{e.mobile}</td>
+                                            <td scope="col">{e.dob}</td>
+                                            <td scope="col">{e.gender}</td>
+                                            { e.addresses ? (e.addresses.map((el) => {
+                                                return (<p>Place:{el.place}<br/>PIN : {el.pincode}</p>)
+                                            })) : (<p>Adress Not available</p>)}
+                                           
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    
             </React.Fragment>
         );
     }

@@ -14,11 +14,12 @@ export default class Home extends React.Component {
     componentDidMount() {
         axios({
             method: 'get',
-            url: 'https://reqres.in/api/users?page=1',
+            url: 'http://localhost:3002/home',
         })
             .then((response) => {
+                console.log(response)
                 this.setState({
-                    arr: response.data.data,
+                    arr: response.data.users,
                 });
             })
             .catch((err) => alert(err))
@@ -36,27 +37,33 @@ export default class Home extends React.Component {
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">First Name</th>
-                                    <th scope="col">Last Name</th>
-                                    <th scope="col">Avatar</th>
+                                    <th scope="col">Mobile</th>
+                                    <th scope="col">DoB</th>
+                                    <th scope="col">Gender</th>
+                                    <th scope="col">Adresses</th>
                                     <th scope="col">Edit</th>
                                     <th scope="col">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.arr.map((e) => {
+                                {this.state.arr.map((e,index) => {
                                     return (
                                         <tr >
                                             <td>
-                                                <Link to={`/nav/show/${e.id}`}>{e.id}</Link>
+                                                <Link to={`/nav/show/${e._id}`}>{index+1}</Link>
                                             </td>
+                                            <td scope="col">{e.name}</td>
                                             <td scope="col">{e.email}</td>
-                                            <td scope="col">{e.first_name}</td>
-                                            <td scope="col">{e.last_name}</td>
-                                            <td scope="col"><img src={e.avatar} ></img></td>
-                                            <td scope="col"><Link to={`/nav/edit/${e.id}`} className="p-2">link</Link></td>
-                                            <td scope="col"><Link to={`/nav/delete/${e.id}`} className="p-2">link</Link></td>
+                                            <td scope="col">{e.mobile}</td>
+                                            <td scope="col">{e.dob}</td>
+                                            <td scope="col">{e.gender}</td>
+                                            { e.addresses ? (e.addresses.map((el) => {
+                                                return (<p>Place:{el.place}<br/>PIN : {el.pincode}</p>)
+                                            })) : (<p>Adress Not available</p>)}
+                                            <td scope="col"><Link to={`/nav/edit/${e._id}`} className="p-2">link</Link></td>
+                                            <td scope="col"><Link to={`/nav/delete/${e._id}`} className="p-2">link</Link></td>
                                         </tr>
                                     )
                                 })}

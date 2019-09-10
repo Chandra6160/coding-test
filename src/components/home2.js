@@ -14,7 +14,7 @@ export default class HomeSecond extends React.Component {
     componentDidMount() {
         axios({
             method: 'get',
-            url: 'https://reqres.in/api/users?page=2',
+            url: 'http://localhost:3002/nav/homeSecond',
         })
             .then((response) => {
                 this.setState({

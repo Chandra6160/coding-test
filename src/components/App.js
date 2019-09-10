@@ -31,8 +31,8 @@ export default class App extends React.Component {
             password :this.state.password
         }
         axios({
-			method: 'POST',
-    		url: 'https://reqres.in/api/login',
+			method: 'GET',
+    		url: 'http://localhost:3002/',
     		data : fields
 		})
 		.then((response) =>{
